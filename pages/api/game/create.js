@@ -10,6 +10,10 @@ import GameRound from "../../../classes/GameRound";
  * * req.cookie: {
  *  playerId: "playerId",
  * }
+ * res.statis: 200 | 400
+ * res.data: {
+ *  message: "Opps! Something went wrong."
+ * } | {gameId: "gameId"}
  */
 
  const generateNewGameId = async () => {

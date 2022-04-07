@@ -12,6 +12,10 @@ import { v4 as uuidv4 } from "uuid";
  * req.cookie: {
  *  playerId: "playerId",
  * }
+ * res.statis: 200 | 400
+ * res.data: {
+ *  message: "success" | "Opps! Something went wrong." | "Game ID is invalid!"
+ * }
  */
 
 const joinGame = async (gameRef, gameData, playerId) => {
