@@ -5,7 +5,7 @@ import GameBoard from "../../src/componenets/GameBoard";
 
 export default function Game({ id }) {
   const [gameData, setGameData] = useState(null);
-
+  
   useEffect(() => {
     getGame();
   }, []);

@@ -34,8 +34,9 @@ export default async (req, res) => {
                 } else {
                     res.status(400).json({ message: "You already played!" });
                 }
+            }else{
+                res.status(400).json({ message: "Game not exist!" });
             }
-            res.status(400).json({ message: "Game not exist!" });
         }catch(error) {
             console.log(error)
             res.status(400).json({message: "Opps! Something went wrong."});

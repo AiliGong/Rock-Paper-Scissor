@@ -33,7 +33,7 @@ export default function GameBoard({ gameData, play }) {
       </Typography>
 
       {/* table for display the history */}
-      <HistoryTable gameData={gameData.historyRounds} />
+      <HistoryTable historyRounds={gameData.historyRounds} />
 
       {gameData.currentStatus === "your turn" && (
         <div className={styles.container}>
