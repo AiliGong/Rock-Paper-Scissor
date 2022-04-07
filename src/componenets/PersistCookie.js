@@ -1,10 +1,10 @@
-import {Fragment, useEffect} from "react";
+import React from "react";
 import { useCookies } from "react-cookie";
 import { v1 as uuidv1 } from "uuid";
 
 export default function PersistCookie({children}) {
     const [cookie, setCookie] = useCookies(["playerId"])
-    useEffect(() => {
+    React.useEffect(() => {
         // Run every time the component is rendered. 
         // Check if cookie already exsist
         // otherwise create a new cookie to persist user informaiton
@@ -15,8 +15,8 @@ export default function PersistCookie({children}) {
     }, []);
 
     return (
-        <Fragment>
+        <React.Fragment>
             {children}
-        </Fragment>
+        </React.Fragment>
     );
 }
