@@ -1,8 +1,26 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Get Started
 
-## Getting Started
+### System Requirements
 
-First, run the development server:
+[Node.js 12.22.0](https://nodejs.org/) or later
+
+### DB SetUp
+
+1. Go to the [Firebase site](https://console.firebase.google.com/) and click **Create a project**
+2. Under the Build tab on the sidebar, click on **Firestore Database** and then click on **Create database**
+3. Click the gear icon next to Project Overview at the top of the sidebar and navigate to Project settings
+4. Go to the Service accounts tab and click on **Generate new private key** to generate the JSON file
+5. Copy and paste the JSON file into the `utils/db`folder and rename it  `serviceAccountKey.json`
+
+### Install Dependencies
+
+```bash
+npm install
+#
+yarn 
+```
+
+### Run the Development Server
 
 ```bash
 npm run dev
@@ -10,25 +28,82 @@ npm run dev
 yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+open [http://localhost:3000](http://localhost:3000/) in browser
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+# API Design
 
-## Learn More
+Stateless REST APIs for user create and play the game.
 
-To learn more about Next.js, take a look at the following resources:
+- 🌐 POST
+**/api/games/create**
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+cookie: playerId
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+returns: 
+status code 200 - gameId
+status code 400 - error
 
-## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Description: create a new game and return the new gameId
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- 🌐 GET
+**/api/games/viewGame?id=${id}**
+
+query: gameId
+cookie: playerId
+
+returns:
+response code: 200 | 400
+response data: 
+{ message: "Opps! Something went wrong."} | 
+{ currentState: "waiting" | "your turn" | "closed",
+playerIndex: 0 | 1 | 2,
+player1Action: "rock" | "paper" | "scissor",
+player2Action: "rock" | "paper" | "scissor",
+roundNumber: 1 | 2 | 3,
+player1: "player1Id",
+player2: "player2Id",
+historyRound: [] }
+
+
+Description: create the game information for display.
+
+- 🌐 POST
+**/api/games/join**
+
+request body: gameId
+cookie: playerId
+
+returns:
+response code: 200 | 400
+response data:  { message: "success" | "Opps! Something went wrong." | "Game ID is invalid!"}
+
+
+Description: Join or rejoin an existing game using gameId. User is only able to join an opening game which is waiting for another play or the game the user is already in.
+
+- 🌐 POST
+**/api/games/play**
+
+request body: gameId, action
+cookie: playerId
+
+returns:
+response code: 200 | 400
+response data: {message: "success" | "Opps! Something went wrong." | "You already played!" | "Game not exist!” }
+
+
+Description: Player plays an action in the game round. Player is allowed to place an action when the game round is ready. If player is already played in that round, no further play action is allowed. 
+
+# Testing
+
+### Run unit test
+
+```bash
+npm run test
+# or
+yarn test
+```
+
+##
